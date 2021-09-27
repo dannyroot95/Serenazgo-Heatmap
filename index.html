@@ -1,0 +1,50 @@
+<html>
+<head>
+  <title>Panel de Serenazgo</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="login_div" class="main-div">
+    <h3><center>Serenazgo</center></h3>
+    <center><img src="logo.png" width="170px"></center>
+    <br></br>
+
+
+    <input type="email" placeholder="Correo..." id="email_field" />
+    <input type="password" placeholder="Contraseña..." id="password_field" />
+
+    <button onclick="login()">Iniciar Sesión</button>
+  </div>
+
+  <div id="user_div" class="loggedin-div">
+    <h3>Bienvenido</h3>
+    <p id="user_para">Bienvenido</p>
+
+    
+    <p><button onclick="list()">Lista de incidentes</button></p>
+   <p><button onclick="map()">Ver mapa</button></p>
+    <button onclick="logout()">Cerrar Sesión</button>
+  </div>
+
+
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+  <script>
+    // INICIALIZANOS NUETRA BASE DE DATOS 
+    var config = {
+      apiKey: "AIzaSyDrm5Kg0O0kcyUFTDq0nnYlS9Eno2P9TNg",
+      authDomain: "serenazgo-b11fd.firebaseapp.com",
+      databaseURL: "https://serenazgo-b11fd.firebaseio.com",
+      projectId: "serenazgo-b11fd",
+      storageBucket: "serenazgo-b11fd.appspot.com",
+      messagingSenderId: "481892388900",
+      appId: "1:481892388900:web:3041857a66dbdf178548b1",
+      measurementId: "G-NFB0H51HE5"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script src="index.js"></script>
+
+</body>
+</html>

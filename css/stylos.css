@@ -1,0 +1,102 @@
+
+ 
+ /* STYLO PARA LA LISTA DE INCIDENTES*/
+
+    button {
+        display: inline-block;
+        outline: 0;
+        border: 0;
+        cursor: pointer;
+        background:#4CAF50;
+        color: #fff;
+        text-decoration: none;
+        font-family: arial, verdana, sans-serif;
+        font-size: 14px;
+           }
+
+    .mbsc-ios.mbsc-form {
+    background: #efeeec;
+        }
+
+    .mbsc-ios.mbsc-page {
+    background: #efeeec; 
+              }
+
+    .button2 {background-color:#4CAF50;} 
+
+    .demo-non-form {
+        color: initial;
+        width: 100%;
+        padding: 10px;
+        margin: 6px 0 12px 0;
+        border: 1px solid #efeeec;
+        border-radius: 0;
+        font-family: arial, verdana, sans-serif;
+        font-size: 14px;
+        box-sizing: border-box;
+        -webkit-appearance: none;
+    }
+    
+    .external-container button.external-button {
+        font-weight: 400;
+        padding: 10px;
+        margin: 6px 0 13px 0;
+        width: 100%;
+    }
+
+   /* STYLO PARA LA IMPRESION DE DATOS */
+
+    @media print {
+
+        @page {
+    size: 30cm 40.7cm;
+    margin: 5mm 5mm 5mm 5mm; /* change the margins as you want them to be. */
+              }
+
+         body *
+           .listado
+            { 
+                 display:block;
+                 background-color: white; 
+                  height: 100%; width: 100%; 
+                  position: absolute; 
+                  top: 0; left: 0; margin: 0;
+                  padding: 15px; 
+                  font-size: 3px; 
+                  line-height: 18px;
+                  
+         } 
+         .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9 {
+                 float: left;
+                   }        
+         p {
+    margin: -5px -5px -6px;
+             }
+             .col-md-1 {
+    width: 10.3%;
+}
+.col-md-3 {
+    width: 32.3%;
+}       
+                  }
+
+
+.loader {
+  border: 16px solid #F39C12; /* Light grey */
+  border-top: 16px solid #1B7C45; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  position: absolute;
+  top: 50%;
+  left: 46%;
+  transform: translate(-50%, -50%);
+  text-align: center; 
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+                 

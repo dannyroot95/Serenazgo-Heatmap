@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   
+   <link rel="stylesheet" href="css/mobiscroll.javascript.min.css">
+   <link rel="stylesheet" href="css/maps.css">
+    <script src="js/mobiscroll.javascript.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7U0aNiNGd0oLz7CLzdluscfw2ojSnsc"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+    <style type="text/css">
+
+/* STYLOS PARA DIBUJAR UN PUNTO DE CALOR */
+
+      #map {
+        height: 100%;
+        width: 100%;
+      }
+
+      #map2 {
+        height: 100%;
+        width: 100%;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+    }
+
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      button {
+        display: inline-block;
+        outline: 0;
+        border: 0;
+        cursor: pointer;
+        background:#4CAF50;
+        color: #fff;
+        text-decoration: none;
+        font-family: arial, verdana, sans-serif;
+        font-size: 14px;
+    }
+
+    .mbsc-ios.mbsc-form {
+    background: #efeeec;
+}
+
+.mbsc-ios.mbsc-page {
+    background: #efeeec;
+}
+
+    .button2 {background-color:#4CAF50;} 
+
+    .demo-non-form {
+        color: initial;
+        width: 100%;
+        padding: 10px;
+        margin: 6px 0 12px 0;
+        border: 1px solid #efeeec;
+        border-radius: 0;
+        font-family: arial, verdana, sans-serif;
+        font-size: 14px;
+        box-sizing: border-box;
+        -webkit-appearance: none;
+    }
+    
+    .external-container button.external-button {
+        font-weight: 400;
+        padding: 10px;
+        margin: 6px 0 13px 0;
+        width: 100%;
+    }
+
+
+
+
+  
+ /* style sheet for "letter" printing */
+ @media print  {
+    @page {
+        margin: 1in;
+    }
+  
+      html, body {
+        height: 60%;
+        width: 100%;
+      }
+      .div{
+        height: 60%;
+        width: 100%;
+      }
+ }
+
+   
+    </style>
+  </head>
+  <body>
+    
+
+    <div mbsc-page class="demo-date-time-picker" id="contenedor3">
+      <center><h3><font size="8" face="verdana">Mapa de delitos Puerto Maldonado</font></h3></center>
+      
+      <table>
+        <tr>
+
+            <td>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="logo.png" width="75px" id="imgsereno">
+            </td>
+
+            <td>
+                <div style="height:100%">
+                    <label>
+                      Fecha inicial
+                      <input id="calendar1" mbsc-input data-input-style="outline" data-label-style="stacked" style="width: 350px;" placeholder="Seleccione la fecha..." />
+                  </label>
+              </div>
+            </td>
+            <td>
+                <div style="height:100%">
+                    <label>
+                      Fecha final
+                      <input id="calendar2" mbsc-input data-input-style="outline" style="width: 350px;" data-label-style="stacked" placeholder="Seleccione la fecha..." />
+                  </label>
+              </div>
+            </td>
+            <td>
+                <button class="button button2"  id="show-map"  style="width: 150px; height: 64px;">Filtrar fechas</button>
+                
+            </td>
+            <td>
+                <button class="button button2"  onclick="imprimir()" id="btnprint" style="width: 150px; height: 64px;">Imprimir</button>
+            </td>
+        </tr>
+    </table>  
+
+
+
+    </div>
+
+
+<script>
+ function imprimir()
+     {
+      //FUNCION PARA IMPRIMIR MAPA
+      document.getElementById("contenedor3").style.display = "none";
+   
+        var w = window.print('', 'printform', 'width=300,height=400');  
+        var html = $("#prntrForm").html(); 
+        $(w.document.body).html(html); 
+    w.print();
+     }
+
+</script>
+
+    <script>
+
+         mobiscroll.setOptions({
+        locale: mobiscroll.localeEs,  // Specify language like: locale: mobiscroll.localePl or omit setting to use default
+        theme: 'ios',                 // Specify theme like: theme: 'ios' or omit setting to use default
+        themeVariant: 'light'         // More info about themeVariant: https://docs.mobiscroll.com/5-5-0/javascript/calendar#opt-themeVariant
+    });
+    
+    mobiscroll.datepicker('#calendar1', {
+        controls: ['calendar'],       // More info about controls: https://docs.mobiscroll.com/5-5-0/javascript/calendar#opt-controls
+        showRangeLabels: true,
+        display: 'anchored'           // Specify display mode like: display: 'bottom' or omit setting to use default
+    });
+
+    mobiscroll.datepicker('#calendar2', {
+        controls: ['calendar'],       // More info about controls: https://docs.mobiscroll.com/5-5-0/javascript/calendar#opt-controls
+        showRangeLabels: true,
+        display: 'anchored'           // Specify display mode like: display: 'bottom' or omit setting to use default
+    });
+    
+  </script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7U0aNiNGd0oLz7CLzdluscfw2ojSnsc&libraries=visualization"></script>
+<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+<div id="map"></div>
+
+
+<script>
+
+function initialize() {
+ 
+ // FUNCION PARA INICIALIZAR EL MAPA DE GOOGLE MAPS
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: -12.591497, lng: -69.1978477},
+      zoom: 15,
+      styles: [{
+        featureType: 'poi',
+        stylers: [{ visibility: 'off' }]  // PARA ENCERDER PUNTOS DE INTERES.
+      }, {
+        featureType: 'transit.station',
+        stylers: [{ visibility: 'off' }]  // PARA MOSTRAR LOS ELEMENTOS DEL MAPA DE GOOGLE MAPS NATIVO.
+      }],
+      disableDoubleClickZoom: true // ZOOM
+    });
+
+//FUNCION PARA DIBUJAR UN PUNTO DE CALOR EN EL MAPA (HEATMAP)
+var heatmap = new google.maps.visualization.HeatmapLayer({
+    data: [],
+    map: map,
+    radius: 24
+  });
+
+//NODO DE LA BASE DE DATOS (RUTA)
+var firebase = new Firebase("https://serenazgo-b11fd.firebaseio.com/");
+var places = firebase.child('heatMap');
+
+// CONBSULTA EN LA BASE DE DATOS
+// OBTENER LOS DATOS Y COLOCAR TODOS LOS PUNTOS DE CALOR EN EL MAPA
+places.orderByChild('heatMap').on('child_added',
+ function(snapshot) {
+   var newPosition = snapshot.val();
+   var point = new google.maps.LatLng(newPosition.lat, newPosition.lng);
+   heatmap.getData().push(point);
+      }
+    );    
+  }
+
+//UTILIZAMOS EL MISMO PROCESO PERO FILTRANDO LOS DATOS
+  $('#show-map').click(function initializeMap() {
+ 
+ var map = new google.maps.Map(document.getElementById('map'), {
+   center: {lat: -12.591497, lng: -69.1978477},
+   zoom: 15,
+   styles: [{
+     featureType: 'poi',
+     stylers: [{ visibility: 'off' }]  
+   }, {
+     featureType: 'transit.station',
+     stylers: [{ visibility: 'off' }]  
+   }],
+   disableDoubleClickZoom: true
+ });
+
+var heatmap = new google.maps.visualization.HeatmapLayer({
+ data: [],
+ map: map,
+ radius: 24
+});
+
+
+var inputVal = document.getElementById("calendar1").value;
+var inputVal2 = document.getElementById("calendar2").value;
+var timestamp = Date.parse(inputVal.split('/').reverse().join('/'));
+var timestamp2 = Date.parse(inputVal2.split('/').reverse().join('/'));
+
+var firebase = new Firebase("https://serenazgo-b11fd.firebaseio.com/");
+var places = firebase.child('heatMap');
+
+// CONSULTA A FIREBASE.
+// ----   >   places.orderByChild('fecha').startAt('01/10/2020').endAt('03/10/2020') obtenerlo de un calendar
+places.orderByChild('timestamp').startAt(timestamp).endAt(timestamp2).on('child_added',
+function(snapshot) {
+var newPosition = snapshot.val();
+var point = new google.maps.LatLng(newPosition.lat, newPosition.lng);
+heatmap.getData().push(point);
+   }
+ );    
+});
+
+//INICIALIZAR MAPA CON LOS PUNTOS DE CALOR
+google.maps.event.addDomListener(window, 'load', initialize);  
+google.maps.event.addDomListener(window, 'load', initializeMap);  
+</script>
+
+
+
+
+
+  </body>
+</html>
+
+       

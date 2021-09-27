@@ -1,0 +1,40 @@
+body{
+   
+}
+
+
+.cabeceraIncidente{
+    margin: 1rem;
+    padding: 1rem;
+    text-align: center;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: grey;
+    background-color: #186E3D;
+    color:white;
+}
+
+.espaciador{
+    min-height: 0px;
+}
+
+div.cell {
+  display: table-cell;
+  border: 1px solid green;
+ width: 3000px;
+}
+
+div.colspan,
+div.colspan+div.cell {
+  border: 0;
+}
+
+div.colspan>div {
+  width: 200px;
+}
+
+div.colspan>div>div {
+ position: relative;
+  width: 99px;
+  overflow: hidden;
+}
